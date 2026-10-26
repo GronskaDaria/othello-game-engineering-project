@@ -1,4 +1,0 @@
-repository "Othello/Othello@7972510916255@cloud"
-  path "/"
-    smartbranch "/main/base" changeset "7"          
-     
