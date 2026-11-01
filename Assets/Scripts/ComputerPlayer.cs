@@ -42,24 +42,24 @@ public class ComputerPlayer
     }
     private int Minimax(GameState state, int depth, Player me)
     {
-        // 1. Warunek koñca: g³êbokoœæ 0 albo koniec gry
+       
         if (depth == 0 || state.GameOver)
         {
             return Evaluate(state, me);
         }
 
-        // 2. Kto teraz ma ruch?
+       
         bool myTurn = state.CurrentPlayer == me;
         int best = myTurn ? int.MinValue : int.MaxValue;
 
-        // 3. SprawdŸ ka¿dy mo¿liwy ruch
+         
         foreach (Position move in state.LegalMoves.Keys)
         {
-            GameState copy = state.Clone();                  // a)
-            copy.MakeMove(move, out _);                      // b)
-            int score = Minimax(copy, depth - 1, me);        // c)
+            GameState copy = state.Clone();                  
+            copy.MakeMove(move, out _);                     
+            int score = Minimax(copy, depth - 1, me);        
 
-            if (myTurn)                                      // d)
+            if (myTurn)                                      
                 best = Math.Max(best, score);
             else
                 best = Math.Min(best, score);
