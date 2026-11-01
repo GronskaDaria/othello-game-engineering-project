@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     private GameState gameState = new GameState();
     private Disc [,] discs = new Disc [8, 8];
     private List<GameObject> highlights = new List<GameObject>();
+    private ComputerPlayer computer = new ComputerPlayer(3);
 
     void Start()
     {
@@ -124,24 +125,10 @@ public class GameManager : MonoBehaviour
 
     private void MakeComputerMove()
     {
-        if (gameState.LegalMoves.Count>0)
+        if (gameState.LegalMoves.Count > 0)
         {
-            Position bestMove = null;
-            int maxFlips = -1;
-
-            foreach (var move in gameState.LegalMoves)
-            {
-                if (move.Value.Count>maxFlips)
-                {
-                    maxFlips=move.Value.Count;
-                    bestMove=move.Key;
-                }
-            }
-
-            if (bestMove!=null)
-            {
-                OnBoardClicked(bestMove);
-            }
+            Position bestMove = computer.FindBestMove(gameState);
+            OnBoardClicked(bestMove);
         }
     }
 
