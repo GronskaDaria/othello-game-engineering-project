@@ -3,6 +3,12 @@ using System;
 
 public class ComputerPlayer
 {
+    private readonly int depth;
+
+    public ComputerPlayer(int depth)
+    {
+        this.depth = depth;
+    }
     private static readonly int[,] Weights =
     {
         { 100, -20,  10,   5,   5,  10, -20, 100 },
@@ -60,5 +66,25 @@ public class ComputerPlayer
         }
 
         return best;
+    }
+    public Position FindBestMove(GameState state)
+    {
+        Player me = state.CurrentPlayer;
+        Position bestMove = null;
+        int bestScore = int.MinValue;
+
+        foreach (Position move in state.LegalMoves.Keys)
+        {
+            GameState copy = state.Clone();
+            copy.MakeMove(move, out _);
+            int score = Minimax(copy, depth - 1, me);
+            if (score > bestScore)
+            {
+                bestScore = score;
+                bestMove = move;
+            }
+        }
+
+        return bestMove;
     }
 }
