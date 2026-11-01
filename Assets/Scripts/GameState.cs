@@ -29,6 +29,26 @@ public class GameState
         CurrentPlayer=Player.Black;
         LegalMoves=FindLegalMoves(CurrentPlayer);
     }
+    private GameState(Player[,] board, Dictionary<Player, int> discCount, Player currentPlayer, bool gameOver, Player winner)
+    {
+        Board = board;
+        DiscCount = discCount;
+        CurrentPlayer = currentPlayer;
+        GameOver = gameOver;
+        Winner = winner;
+        LegalMoves = FindLegalMoves(CurrentPlayer);
+    }
+
+    public GameState Clone()
+    {
+        return new GameState(
+            (Player[,])Board.Clone(),
+            new Dictionary<Player, int>(DiscCount),
+            CurrentPlayer,
+            GameOver,
+            Winner
+        );
+    }
 
     public bool MakeMove(Position pos, out MoveInfo moveInfo)
     {
