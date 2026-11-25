@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     private GameState gameState = new GameState();
     private Disc [,] discs = new Disc [8, 8];
     private List<GameObject> highlights = new List<GameObject>();
-    private ComputerPlayer computer = new ComputerPlayer(3);
+    private ComputerPlayer computer = new ComputerPlayer(GameSettings.AiDepth);
 
     void Start()
     {
