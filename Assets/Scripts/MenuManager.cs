@@ -3,10 +3,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
-
 {
-    [SerializeField] private AudioSource sfxSource; 
+    [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioClip clickSound;
+
+    [SerializeField] private GameObject mainPanel;
+    [SerializeField] private GameObject difficultyPanel;
 
     public IEnumerator PlayPlayerVsPlayer()
     {
@@ -28,28 +30,42 @@ public class MenuManager : MonoBehaviour
 
     public void OnPvPClicked()
     {
-        if (sfxSource!=null&&clickSound!=null)
-        {
-            sfxSource.PlayOneShot(clickSound);
-        }
+        PlayClick();
         StartCoroutine(PlayPlayerVsPlayer());
     }
 
     public void OnPvCClicked()
     {
-        if (sfxSource!=null&&clickSound!=null)
-        {
-            sfxSource.PlayOneShot(clickSound);
-        }
+        PlayClick();
+        mainPanel.SetActive(false);
+        difficultyPanel.SetActive(true);
+    }
+
+    public void OnDifficultyClicked(int depth)
+    {
+        PlayClick();
+        GameSettings.AiDepth = depth;
         StartCoroutine(PlayPlayerVsComputer());
+    }
+
+    public void OnBackClicked()
+    {
+        PlayClick();
+        difficultyPanel.SetActive(false);
+        mainPanel.SetActive(true);
     }
 
     public void OnQuitClicked()
     {
-        if (sfxSource!=null&&clickSound!=null)
+        PlayClick();
+        StartCoroutine(QuitGame());
+    }
+
+    private void PlayClick()
+    {
+        if (sfxSource != null && clickSound != null)
         {
             sfxSource.PlayOneShot(clickSound);
         }
-        StartCoroutine(QuitGame());
     }
 }
